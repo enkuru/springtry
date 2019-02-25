@@ -4,6 +4,7 @@ import com.enkuru.springtry.util.Auditable;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.Filter;
 
 import javax.persistence.*;
 import java.util.List;
@@ -27,7 +28,7 @@ public class Post extends Auditable<User> {
     @Column(name = "SUBJECT", nullable = false)
     String subject;
 
-    @Column(name = "CONTENT", nullable = false,length = 5000)
+    @Column(name = "CONTENT", nullable = false, length = 5000)
     String content;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -37,4 +38,12 @@ public class Post extends Auditable<User> {
             inverseJoinColumns = @JoinColumn(name = "TAG_ID", referencedColumnName = "ID")
     )
     List<HashTag> tags;
+
+    @OneToMany(mappedBy = "post")
+    @Filter(name = "likeVote", condition = "TYPE = 'L'")
+    List<Vote> likeVotes;
+
+    @OneToMany(mappedBy = "post")
+    @Filter(name = "likeVote", condition = "TYPE = 'D'")
+    List<Vote> dislikeVotes;
 }

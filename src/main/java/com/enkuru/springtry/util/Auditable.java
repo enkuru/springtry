@@ -27,24 +27,24 @@ public abstract class Auditable<U> {
     @ManyToOne
     @CreatedBy
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @JoinColumn(name = "CREATED_BY")
+    @JoinColumn(name = "CREATED_BY", nullable = false, updatable = false)
     U createdBy;
 
     @CreatedDate
     @Temporal(TIMESTAMP)
-    @JoinColumn(name = "CREATED_DATE")
+    @JoinColumn(name = "CREATED_DATE", nullable = false, updatable = false)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     Date creationDate;
 
     @ManyToOne
     @LastModifiedBy
-    @JoinColumn(name = "UPDATED_BY")
+    @JoinColumn(name = "UPDATED_BY", nullable = false)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     U lastModifiedBy;
 
     @LastModifiedDate
     @Temporal(TIMESTAMP)
-    @JoinColumn(name = "UPDATED_DATE")
+    @JoinColumn(name = "UPDATED_DATE", nullable = false)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     Date lastModifiedDate;
 }

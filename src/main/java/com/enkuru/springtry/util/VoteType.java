@@ -7,7 +7,7 @@ package com.enkuru.springtry.util;
  * Time: 14:57
  */
 public enum VoteType {
-    L("Like"), D("Dislike");
+    Like("L"), Dislike("D");
 
     private String type;
 
