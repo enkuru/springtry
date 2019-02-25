@@ -1,13 +1,10 @@
-package com.enkuru.springtry.domain;
+package com.enkuru.springtry.model;
 
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Create Info
@@ -22,7 +19,7 @@ public class Role {
 
     @Id
     @Column(name = "ID")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
     @Column(name = "CODE", nullable = false)

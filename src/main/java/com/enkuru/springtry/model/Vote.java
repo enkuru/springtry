@@ -1,4 +1,4 @@
-package com.enkuru.springtry.domain;
+package com.enkuru.springtry.model;
 
 import com.enkuru.springtry.util.Auditable;
 import com.enkuru.springtry.util.VoteType;
@@ -21,7 +21,7 @@ public class Vote extends Auditable<User> {
 
     @Id
     @Column(name = "ID")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
     @Column(name = "TYPE", nullable = false)
