@@ -32,13 +32,9 @@ public class User extends Auditable<User> {
     @Column(name = "SURNAME")
     String surname;
 
-    @Min(5)
-    @Max(35)
     @Column(name = "USERNAME", nullable = false)
     String username;
 
-    @Min(8)
-    @Max(50)
     @Column(name = "PASSWORD", nullable = false)
     String password;
 
