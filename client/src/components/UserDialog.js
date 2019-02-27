@@ -7,7 +7,6 @@ import {
   DialogContent,
   DialogTitle,
   FormControl,
-  FormHelperText,
   Input,
   InputLabel,
   MenuItem,
@@ -49,12 +48,10 @@ class UserDialog extends Component {
 
     return (
       <div>
-        <Button variant="outlined" color="primary" className={classes.btn}
-                onClick={() => this.changeShowStatus(true)}>
+        <Button variant="outlined" color="primary" className={classes.btn} onClick={() => this.changeShowStatus(true)}>
           {onEditMode ? "Edit" : "Add"}
         </Button>
-        <Dialog open={this.state.showStatus} onClose={this.handleClose}
-                aria-labelledby="responsive-dialog-title">
+        <Dialog open={this.state.showStatus} onClose={this.handleClose} aria-labelledby="responsive-dialog-title">
           <DialogTitle id="responsive-dialog-title" align="center">{onEditMode ? "Edit User" : "Add User"}</DialogTitle>
           <DialogContent>
             <form className={classes.form}>
