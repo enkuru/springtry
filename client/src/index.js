@@ -8,7 +8,6 @@ import {applyMiddleware, createStore} from 'redux';
 import rootReducer from './reducers/rootReducer';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
-import reduxPromise from 'redux-promise-middleware';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {Provider} from 'react-redux';
 import {BrowserRouter} from 'react-router-dom';
@@ -19,9 +18,7 @@ const store = createStore(
 
 ReactDOM.render(
   <BrowserRouter>
-    <Provider store={store}>
-      <App/>
-    </Provider>
+    <Provider store={store}><App/></Provider>
   </BrowserRouter>, document.getElementById('root'));
 
 serviceWorker.register();

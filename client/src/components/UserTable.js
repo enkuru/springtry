@@ -1,7 +1,17 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
-import {Paper, Table, TableBody, TableCell, TableHead, TableRow} from '@material-ui/core';
+import {
+  IconButton,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Toolbar,
+  Typography
+} from '@material-ui/core';
 import UserDialog from "./UserDialog";
 
 const styles = theme => ({
@@ -9,6 +19,9 @@ const styles = theme => ({
     width: '100%',
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
+  },
+  grow: {
+    flexGrow: 1,
   },
   table: {
     minWidth: 700,
@@ -34,6 +47,11 @@ class UserTable extends Component {
 
     return (
       <Paper className={classes.root}>
+        <Toolbar>
+          <Typography variant="h6" color="inherit" >User Management</Typography>
+          <Typography variant="h6" color="inherit" className={classes.grow}>{}</Typography>
+          <IconButton color="inherit"><UserDialog/></IconButton>
+        </Toolbar>
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
@@ -41,7 +59,7 @@ class UserTable extends Component {
               <TableCell align="center">Full Name</TableCell>
               <TableCell align="center">Email</TableCell>
               <TableCell align="center">Role</TableCell>
-              <TableCell align="center"><UserDialog/></TableCell>
+              <TableCell align="center">&nbsp;</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

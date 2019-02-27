@@ -16,6 +16,9 @@ const styles = {
   loginBtn: {
     textTransform: 'none'
   },
+  header:{
+    color: "secondary",
+  },
   menuButton: {
     color: "inherit",
     textTransform: 'none',
@@ -38,7 +41,7 @@ class Header extends Component {
       <AppBar position="static" color="inherit">
         <Toolbar>
           {/*<Menu/>*/}
-          <Button color="primary" to="/" className={classes.menuButton} exact component={NavLink}><Home/></Button>
+          <Button color="primary" to="/" className={`${classes.menuButton} ${classes.header}`} exact component={NavLink}><Home/>&nbsp;Admin Panel</Button>
           <Button color="primary" to="/users" className={classes.menuButton} exact component={NavLink}>Users</Button>
           <Button color="primary" to="/roles" className={classes.menuButton} exact component={NavLink}>Roles</Button>
           <Typography variant="h6" color="inherit" className={classes.grow}>
