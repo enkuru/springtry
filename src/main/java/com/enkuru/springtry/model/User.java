@@ -17,10 +17,6 @@ import javax.validation.constraints.Email;
  */
 @Data
 @Entity
-@Table(name = "USER", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"USERNAME"}),
-        @UniqueConstraint(columnNames = {"EMAIL"})
-})
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class User extends Auditable<User> {
@@ -36,14 +32,14 @@ public class User extends Auditable<User> {
     @Column(name = "SURNAME")
     String surname;
 
-    @Column(name = "USERNAME", nullable = false)
+    @Column(name = "USERNAME", nullable = false, unique = true)
     String username;
 
     @Column(name = "PASSWORD", nullable = false)
     String password;
 
     @Email
-    @Column(name = "EMAIL", nullable = false)
+    @Column(name = "EMAIL", nullable = false, unique = true)
     String email;
 
     @ManyToOne

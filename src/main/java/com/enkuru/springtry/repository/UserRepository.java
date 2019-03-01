@@ -3,6 +3,7 @@ package com.enkuru.springtry.repository;
 import com.enkuru.springtry.model.User;
 import com.enkuru.springtry.projection.UserProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.Optional;
  * Time: 15:23
  */
 @RepositoryRestResource(excerptProjection = UserProjection.class)
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecificationExecutor<User> {
     Optional<User> findByEmail(String email);
 
     Optional<User> findByUsernameOrEmail(String username, String email);
@@ -27,4 +28,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Boolean existsByUsername(String username);
 
     Boolean existsByEmail(String email);
+
 }

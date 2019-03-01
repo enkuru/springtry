@@ -53,3 +53,21 @@ export function saveUser(user) {
     }).then(() => fetchUserList(dispatch))
   }
 }
+
+export function updateUser(person) {
+  return dispatch => {
+    dispatch({
+      type: UPDATE_USER,
+      payload: axios.put(`${API_BASE}/users/${person.id}`, person).then(res => res.data)
+    }).then(() => fetchUserList(dispatch))
+  }
+}
+
+export function deleteUser(id) {
+  return dispatch => {
+    dispatch({
+      type: DELETE_USER,
+      payload: axios.delete(`${API_BASE}/users/${id}`).then(res => res.data)
+    }).then(() => fetchUserList(dispatch))
+  }
+}

@@ -14,7 +14,7 @@ import {
   Select
 } from "@material-ui/core";
 import {connect} from "react-redux";
-import {saveUser} from './../actions/user';
+import {saveUser, updateUser} from './../actions/user';
 import {withStyles} from "@material-ui/core/styles/index";
 
 const styles = theme => ({

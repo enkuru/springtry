@@ -40,7 +40,7 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public Integer getUserIdFromJWT(String token) {
+    Integer getUserIdFromJWT(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(jwtSecret)
                 .parseClaimsJws(token)
@@ -49,7 +49,7 @@ public class JwtTokenProvider {
         return Integer.parseInt(claims.getSubject());
     }
 
-    public boolean validateToken(String authToken) {
+    boolean validateToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
             return true;

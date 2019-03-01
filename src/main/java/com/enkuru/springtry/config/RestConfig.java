@@ -1,5 +1,8 @@
 package com.enkuru.springtry.config;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.reflections.Reflections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -11,14 +14,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.metamodel.Type;
 
 @Configuration
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class RestConfig implements RepositoryRestConfigurer {
 
-    private final EntityManager entityManager;
-
-    @Autowired
-    public RestConfig(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
+    final EntityManager entityManager;
 
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {

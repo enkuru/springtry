@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
 
 import {fetchRoles} from './../actions/role';
-import {fetchUsers, loadUser} from './../actions/user';
+import {deleteUser, fetchUsers, loadUser} from './../actions/user';
 import UserTable from './../components/UserTable';
 
 const styles = theme => ({});
@@ -21,11 +21,11 @@ class User extends Component {
   }
 
   render() {
-    const {user, loadUser} = this.props;
+    const {user, loadUser, deleteUser} = this.props;
 
     return (
       <div>
-        <UserTable roleList={user.roleList} userList={user.userList} loadUser={loadUser}/>
+        <UserTable roleList={user.roleList} userList={user.userList} loadUser={loadUser} deleteUser={deleteUser}/>
       </div>
     );
   }
@@ -35,6 +35,6 @@ const mapStateToProps = ({user}) => {
   return {user};
 };
 
-const mapDispatchToProps = {fetchRoles, fetchUsers, loadUser};
+const mapDispatchToProps = {fetchRoles, fetchUsers, loadUser, deleteUser};
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(User));

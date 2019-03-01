@@ -4,7 +4,6 @@ import {withStyles} from '@material-ui/core/styles';
 import {
   Button,
   Grid,
-  IconButton,
   Paper,
   Table,
   TableBody,
@@ -59,7 +58,7 @@ class UserTable extends Component {
   static propTypes = {classes: PropTypes.object.isRequired};
 
   render() {
-    const {classes, userList, roleList, loadUser} = this.props;
+    const {classes, userList, roleList, loadUser, deleteUser} = this.props;
 
     const emptyInfo = (
       <TableRow key={-1}>
@@ -74,11 +73,10 @@ class UserTable extends Component {
           <Typography variant="h6" color="inherit" className={classes.grow}>
             <UserDialog roleList={roleList}/>
           </Typography>
-          <IconButton color="inherit" onClick={() => loadUser()}>
-            <Button variant="contained" color="primary" className={`${classes.btn} ${classes.addNewBtn}`}>
-              Add New
-            </Button>
-          </IconButton>
+          <Button variant="contained" onClick={() => loadUser()} color="primary"
+                  className={`${classes.btn} ${classes.addNewBtn}`}>
+            Add New
+          </Button>
         </Toolbar>
 
         <Table className={classes.table}>
@@ -109,7 +107,7 @@ class UserTable extends Component {
                     <Grid item xs={6}>
                       {user.username !== 'admin' ?
                         (<Button variant="outlined" className={`${classes.btn} ${classes.deleteBtn}`}
-                                 onClick={loadUser}>Delete</Button>
+                                 onClick={() => deleteUser(user.id)}>Delete</Button>
                         ) : undefined}
                     </Grid>
                   </Grid>

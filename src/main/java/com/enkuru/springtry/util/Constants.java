@@ -7,6 +7,8 @@ package com.enkuru.springtry.util;
  * Time: 16:55
  */
 public interface Constants {
-    final String ROLE_ADMIN = "ADMIN";
-    final String ROLE_USER = "USER";
+    String API_BASE = "/api/";
+
+    String ROLE_ADMIN = "ADMIN";
+    String ROLE_USER = "USER";
 }

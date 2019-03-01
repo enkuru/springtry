@@ -11,6 +11,9 @@ import com.enkuru.springtry.repository.RoleRepository;
 import com.enkuru.springtry.repository.UserRepository;
 import com.enkuru.springtry.security.JwtTokenProvider;
 import com.enkuru.springtry.util.Constants;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,22 +39,19 @@ import java.net.URI;
  */
 @RestController
 @RequestMapping("/api/auth")
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class AuthController {
 
-    @Autowired
-    AuthenticationManager authenticationManager;
+    final AuthenticationManager authenticationManager;
 
-    @Autowired
-    UserRepository userRepository;
+    final UserRepository userRepository;
 
-    @Autowired
-    RoleRepository roleRepository;
+    final RoleRepository roleRepository;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    JwtTokenProvider tokenProvider;
+    final JwtTokenProvider tokenProvider;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -71,7 +71,7 @@ public class AuthController {
         if (usernameExists || emailExists) {
             String message = (usernameExists ? "Username" : "Email") + " is already taken!";
 
-            return new ResponseEntity(new ApiResponse(false, message), HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().body(new ApiResponse(false, message));
         }
 
         User user = new User(signUpRequest.getName(), signUpRequest.getSurname(), signUpRequest.getUsername(), signUpRequest.getPassword(), signUpRequest.getEmail());

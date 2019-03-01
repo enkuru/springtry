@@ -3,7 +3,9 @@ package com.enkuru.springtry.service;
 import com.enkuru.springtry.model.User;
 import com.enkuru.springtry.repository.UserRepository;
 import com.enkuru.springtry.security.UserPrincipal;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,10 +19,11 @@ import org.springframework.transaction.annotation.Transactional;
  * Time: 16:33
  */
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CustomUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    UserRepository userRepository;
+    final UserRepository userRepository;
 
     @Override
     @Transactional

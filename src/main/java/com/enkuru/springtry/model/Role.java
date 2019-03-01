@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Create Info
@@ -22,6 +23,6 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
-    @Column(name = "CODE", nullable = false)
+    @Column(name = "CODE", nullable = false, unique = true)
     String code;
 }
