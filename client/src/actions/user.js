@@ -49,7 +49,7 @@ export function saveUser(user) {
   return dispatch => {
     dispatch({
       type: SAVE_USER,
-      payload: axios.post(`${API_BASE}/users`, user).then(res => res.data)
+      payload: axios.post(`${API_BASE}/user/save`, user).then(res => res.data)
     }).then(() => fetchUserList(dispatch))
   }
 }

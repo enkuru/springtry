@@ -34,14 +34,14 @@ class UserDialog extends Component {
   static propTypes = {classes: PropTypes.object.isRequired};
 
   state = {
-    user: this.props.user.currentUser,
+    ...this.props.user.currentUser,
     showModal: this.props.user.showModal,
   };
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       showModal: nextProps.user.showModal,
-      user: nextProps.user.currentUser,
+      ...nextProps.user.currentUser,
     });
   }
 
@@ -49,15 +49,19 @@ class UserDialog extends Component {
 
   handleModal = modalState => this.setState({showModal: modalState});
 
-  saveUser = () => {
+  saveOrUpdateUser = () => {
+    const {id, name, surname, username, email, password, role} = this.state;
+    const user = {id, name, surname, username, email, password, role};
 
+    user.id ? this.props.updateUser(user) : this.props.saveUser(user);
   };
 
   render() {
     const {classes, roleList} = this.props;
-    const onEditMode = !!this.state.user.id;
+    const onEditMode = !!this.state.id;
     const onClose = () => this.handleModal(false);
 
+    console.log("state - ", this.state);
     return (
       <div>
         <Dialog open={this.state.showModal} onClose={onClose} aria-labelledby="responsive-dialog-title">
@@ -68,15 +72,14 @@ class UserDialog extends Component {
                 <Grid item xs={6}>
                   <FormControl margin="normal" fullWidth>
                     <InputLabel htmlFor="name">Name</InputLabel>
-                    <Input value={this.state.user.name} id="name" name="name" autoComplete="name"
-                           onChange={this.handleChange} autoFocus/>
+                    <Input value={this.state.name} id="name" name="user.name" onChange={this.handleChange}
+                           autoFocus/>
                   </FormControl>
                 </Grid>
                 <Grid item xs={6}>
                   <FormControl margin="normal" fullWidth>
                     <InputLabel htmlFor="surname">Surname</InputLabel>
-                    <Input value={this.state.user.surname} id="surname" name="surname" onChange={this.handleChange}
-                           autoComplete="surname"/>
+                    <Input value={this.state.surname} id="surname" name="surname" onChange={this.handleChange}/>
                   </FormControl>
                 </Grid>
               </Grid>
@@ -84,21 +87,20 @@ class UserDialog extends Component {
                 <Grid item xs={6}>
                   <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="username">Username</InputLabel>
-                    <Input value={this.state.user.username} id="username" name="username" onChange={this.handleChange}
-                           autoComplete="username"/>
+                    <Input value={this.state.username} id="username" name="username" onChange={this.handleChange}/>
                   </FormControl>
                 </Grid>
                 <Grid item xs={6}>
                   <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="email">Email</InputLabel>
-                    <Input value={this.state.user.email} name="email" type="email" id="email"
-                           onChange={this.handleChange} autoComplete="current-email"/>
+                    <Input value={this.state.email} name="email" type="email" id="email"
+                           onChange={this.handleChange}/>
                   </FormControl>
                 </Grid>
               </Grid>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="role-required">Role</InputLabel>
-                <Select value={this.state.user.role.id} onChange={this.handleChange} name="role"
+                <Select value={this.state.role.id} onChange={this.handleChange} name="role"
                         inputProps={{id: 'role-required'}}>
                   {roleList.map(role => (<MenuItem key={role.id} value={role.id}>{role.code}</MenuItem>))}
                 </Select>
@@ -108,7 +110,7 @@ class UserDialog extends Component {
           <DialogActions>
             <Button className={classes.btn} onClick={onClose}
                     variant="outlined" color="secondary">Cancel</Button>
-            <Button className={classes.btn} onClick={this.saveUser}
+            <Button className={classes.btn} onClick={this.saveOrUpdateUser}
                     variant="outlined" color="primary" autoFocus>{onEditMode ? "Update" : "Save"}</Button>
           </DialogActions>
         </Dialog>
@@ -121,6 +123,6 @@ const mapStateToProps = ({user}) => {
   return {user};
 };
 
-const mapDispatchToProps = {saveUser};
+const mapDispatchToProps = {saveUser, updateUser};
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(UserDialog));
