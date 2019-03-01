@@ -3,6 +3,8 @@ package com.enkuru.springtry.repository;
 import com.enkuru.springtry.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 /**
  * Create Info
  * User: ME99844
@@ -10,4 +12,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Time: 15:24
  */
 public interface RoleRepository extends JpaRepository<Role, Integer> {
+    Optional<Role> findByCode(String code);
 }

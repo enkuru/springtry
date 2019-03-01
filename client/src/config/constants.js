@@ -1,0 +1,1 @@
+export const emptyUser = {name: '', surname: '', username: '', email: '', password: '', role: {id: 1}};

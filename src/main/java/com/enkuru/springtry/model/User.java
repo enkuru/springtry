@@ -3,12 +3,11 @@ package com.enkuru.springtry.model;
 import com.enkuru.springtry.util.Auditable;
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 
 /**
  * Create Info
@@ -18,6 +17,11 @@ import javax.validation.constraints.Min;
  */
 @Data
 @Entity
+@Table(name = "USER", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"USERNAME"}),
+        @UniqueConstraint(columnNames = {"EMAIL"})
+})
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class User extends Auditable<User> {
 
@@ -45,4 +49,12 @@ public class User extends Auditable<User> {
     @ManyToOne
     @JoinColumn(name = "ROLE_ID")
     Role role;
+
+    public User(String name, String surname, String username, String password, @Email String email) {
+        this.name = name;
+        this.surname = surname;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
 }
