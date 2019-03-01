@@ -96,24 +96,13 @@ class UserDialog extends Component {
                   </FormControl>
                 </Grid>
               </Grid>
-              <Grid container spacing={8}>
-                <Grid item xs={6}>
-                  <FormControl margin="normal" required fullWidth>
-                    <InputLabel htmlFor="password">Password</InputLabel>
-                    <Input value={this.state.user.password} name="password" type="password" id="password"
-                           onChange={this.handleChange} autoComplete="current-password"/>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={6}>
-                  <FormControl margin="normal" required fullWidth>
-                    <InputLabel htmlFor="role-required">Role</InputLabel>
-                    <Select value={this.state.user.role.id} onChange={this.handleChange} name="role"
-                            inputProps={{id: 'role-required'}}>
-                      {roleList.map(role => (<MenuItem key={role.id} value={role.id}>{role.code}</MenuItem>))}
-                    </Select>
-                  </FormControl>
-                </Grid>
-              </Grid>
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="role-required">Role</InputLabel>
+                <Select value={this.state.user.role.id} onChange={this.handleChange} name="role"
+                        inputProps={{id: 'role-required'}}>
+                  {roleList.map(role => (<MenuItem key={role.id} value={role.id}>{role.code}</MenuItem>))}
+                </Select>
+              </FormControl>
             </form>
           </DialogContent>
           <DialogActions>
