@@ -2,11 +2,9 @@ package com.enkuru.springtry.security;
 
 import com.enkuru.springtry.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -42,7 +40,7 @@ public class UserPrincipal implements UserDetails {
 
     public static UserPrincipal create(User user) {
         return new UserPrincipal(user.getId(), user.getName(), user.getUsername(), user.getUsername(),
-                user.getEmail(), user.getPassword(), Collections.singleton(new SimpleGrantedAuthority(user.getRole().getCode())));
+                user.getEmail(), user.getPassword(), Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRole().getCode())));
     }
 
     @Override
