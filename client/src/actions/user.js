@@ -36,7 +36,7 @@ export function loadUser(user = emptyUser) {
   }
 }
 
-const fetchUserList = (dispatch) => dispatch({
+const fetchUserList = dispatch => dispatch({
   type: FETCH_USERS,
   payload: axios.get(`${API_BASE}/users`).then(res => res.data._embedded.users)
 });

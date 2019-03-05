@@ -14,6 +14,7 @@ export const AUTH_ME_FULFILLED = 'AUTH_ME_FULFILLED';
 export const AUTH_ME_REJECTED = 'AUTH_ME_REJECTED';
 
 const redirectHome = dispatch => dispatch({type: REDIRECT_HOME});
+const authRejected = dispatch => dispatch({type: AUTH_ME_REJECTED});
 
 const getAuthInfo = dispatch => dispatch({
   type: AUTH_ME,
@@ -21,13 +22,13 @@ const getAuthInfo = dispatch => dispatch({
 });
 
 export function loginSubmit(loginInfo) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: SUBMIT_LOGIN,
       payload: axios.post(`${API_BASE}/auth/signin`, loginInfo)
         .then(res => {
           localStorage.setItem('token', res.data.accessToken);
-          axios.defaults.headers.common['Authorization'] = "Bearer " + res.data.accessToken
+          axios.defaults.headers.common['Authorization'] = "Bearer " + res.data.accessToken;
         })
         .then(() => getAuthInfo(dispatch))
         .then(() => redirectHome(dispatch))
@@ -36,8 +37,8 @@ export function loginSubmit(loginInfo) {
 }
 
 export function authMe() {
-  return dispatch => getAuthInfo(dispatch)
-    .catch(function () {
-      localStorage.clear();
-    });
+  return dispatch => getAuthInfo(dispatch).catch(() => {
+    localStorage.removeItem('token');
+    authRejected(dispatch);
+  });
 }

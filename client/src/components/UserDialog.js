@@ -34,12 +34,14 @@ class UserDialog extends Component {
   static propTypes = {classes: PropTypes.object.isRequired};
 
   state = {
+    roleId: this.props.user.currentUser.role.id,
     ...this.props.user.currentUser,
     showModal: this.props.user.showModal,
   };
 
   componentWillReceiveProps(nextProps) {
     this.setState({
+      roleId: nextProps.user.currentUser.role.id,
       showModal: nextProps.user.showModal,
       ...nextProps.user.currentUser,
     });
@@ -50,8 +52,8 @@ class UserDialog extends Component {
   handleModal = modalState => this.setState({showModal: modalState});
 
   saveOrUpdateUser = () => {
-    const {id, name, surname, username, email, password, role} = this.state;
-    const user = {id, name, surname, username, email, password, role};
+    const {id, name, surname, username, email, password, roleId} = this.state;
+    const user = {id, name, surname, username, email, password, role: {id: roleId}};
 
     user.id ? this.props.updateUser(user) : this.props.saveUser(user);
   };
@@ -100,7 +102,7 @@ class UserDialog extends Component {
               </Grid>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="role-required">Role</InputLabel>
-                <Select value={this.state.role.id} onChange={this.handleChange} name="role"
+                <Select value={this.state.roleId} onChange={this.handleChange} name="roleId"
                         inputProps={{id: 'role-required'}}>
                   {roleList.map(role => (<MenuItem key={role.id} value={role.id}>{role.code}</MenuItem>))}
                 </Select>
