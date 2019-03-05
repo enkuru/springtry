@@ -13,6 +13,6 @@ import java.util.Optional;
  * Time: 15:24
  */
 @RepositoryRestResource
-public interface RoleRepository extends JpaRepository<Role, Integer> {
+public interface RoleRepository extends JpaRepository<Role, Long> {
     Optional<Role> findByCode(String code);
 }

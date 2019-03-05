@@ -10,26 +10,20 @@ import com.enkuru.springtry.payload.response.JwtAuthenticationResponse;
 import com.enkuru.springtry.repository.RoleRepository;
 import com.enkuru.springtry.repository.UserRepository;
 import com.enkuru.springtry.security.JwtTokenProvider;
+import com.enkuru.springtry.security.UserPrincipal;
 import com.enkuru.springtry.util.Constants;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.net.URI;
 
 /**
  * Create Info
@@ -40,7 +34,6 @@ import java.net.URI;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class AuthController {
 
     final AuthenticationManager authenticationManager;
@@ -74,9 +67,13 @@ public class AuthController {
             return ResponseEntity.badRequest().body(new ApiResponse(false, message));
         }
 
-        User user = new User(signUpRequest.getName(), signUpRequest.getSurname(), signUpRequest.getUsername(), signUpRequest.getPassword(), signUpRequest.getEmail());
+        User user = new User();
+        user.setName(signUpRequest.getName());
+        user.setSurname(signUpRequest.getSurname());
+        user.setUsername(signUpRequest.getUsername());
+        user.setEmail(signUpRequest.getEmail());
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
 
         Role userRole = roleRepository.findByCode(Constants.ROLE_USER)
                 .orElseThrow(() -> new AppException("User Role not set."));
@@ -86,6 +83,19 @@ public class AuthController {
         User result = userRepository.save(user);
 
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<?> getAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated() || authentication instanceof AnonymousAuthenticationToken) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+
+        return ResponseEntity.ok(userRepository.findById(userPrincipal.getId()));
     }
 
 }

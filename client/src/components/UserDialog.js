@@ -72,7 +72,7 @@ class UserDialog extends Component {
                 <Grid item xs={6}>
                   <FormControl margin="normal" fullWidth>
                     <InputLabel htmlFor="name">Name</InputLabel>
-                    <Input value={this.state.name} id="name" name="user.name" onChange={this.handleChange}
+                    <Input value={this.state.name} id="name" name="name" onChange={this.handleChange}
                            autoFocus/>
                   </FormControl>
                 </Grid>

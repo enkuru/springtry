@@ -1,11 +1,8 @@
 package com.enkuru.springtry.model;
 
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * Create Info
@@ -15,14 +12,13 @@ import java.util.List;
  */
 @Data
 @Entity
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Role {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "ROLE_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    private Long id;
 
     @Column(name = "CODE", nullable = false, unique = true)
-    String code;
+    private String code;
 }

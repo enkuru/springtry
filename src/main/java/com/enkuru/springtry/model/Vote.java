@@ -1,10 +1,8 @@
 package com.enkuru.springtry.model;
 
-import com.enkuru.springtry.util.Auditable;
+import com.enkuru.springtry.util.AuditableDate;
 import com.enkuru.springtry.util.VoteType;
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 
@@ -16,23 +14,22 @@ import javax.persistence.*;
  */
 @Data
 @Entity
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class Vote extends Auditable<User> {
+public class Vote extends AuditableDate<User> {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "VOTE_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    private Long id;
 
     @Column(name = "TYPE", nullable = false)
     @Enumerated(EnumType.STRING)
-    VoteType type;
+    private VoteType type;
 
     @ManyToOne
     @JoinColumn(name = "POST_ID", nullable = false)
-    Post post;
+    private Post post;
 
     @ManyToOne
     @JoinColumn(name = "COMMENT_ID", nullable = false)
-    Comment comment;
+    private Comment comment;
 }

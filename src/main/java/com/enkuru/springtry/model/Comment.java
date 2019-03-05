@@ -1,9 +1,7 @@
 package com.enkuru.springtry.model;
 
-import com.enkuru.springtry.util.Auditable;
-import lombok.AccessLevel;
+import com.enkuru.springtry.util.AuditableDate;
 import lombok.Data;
-import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 
@@ -15,22 +13,21 @@ import javax.persistence.*;
  */
 @Data
 @Entity
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class Comment extends Auditable<User> {
+public class Comment extends AuditableDate<User> {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "COMMENT_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    private Long id;
 
     @Column(name = "CONTENT", nullable = false)
-    String content;
+    private String content;
 
     @ManyToOne
     @JoinColumn(name = "POST_ID", nullable = false)
-    Post post;
+    private Post post;
 
     @ManyToOne
     @JoinColumn(name = "PARENT_ID")
-    Comment parentComment;
+    private Comment parentComment;
 }

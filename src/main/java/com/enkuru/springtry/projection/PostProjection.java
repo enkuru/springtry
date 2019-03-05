@@ -2,8 +2,6 @@ package com.enkuru.springtry.projection;
 
 import com.enkuru.springtry.model.HashTag;
 import com.enkuru.springtry.model.Post;
-import com.enkuru.springtry.model.User;
-import com.enkuru.springtry.util.AuditableProjection;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.core.config.Projection;
 
@@ -16,8 +14,8 @@ import java.util.List;
  * Time: 15:59
  */
 @Projection(name = "PostProjection", types = {Post.class})
-public interface PostProjection extends AuditableProjection<User> {
-    Integer getId();
+public interface PostProjection {
+    Long getId();
 
     String getSubject();
 

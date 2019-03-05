@@ -1,9 +1,7 @@
 package com.enkuru.springtry.model;
 
-import com.enkuru.springtry.util.Auditable;
-import lombok.AccessLevel;
+import com.enkuru.springtry.util.AuditableDate;
 import lombok.Data;
-import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.util.List;
@@ -16,16 +14,15 @@ import java.util.List;
  */
 @Data
 @Entity
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class HashTag extends Auditable<User> {
+public class HashTag extends AuditableDate<User> {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "TAG_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    private Long id;
 
     @Column(name = "NAME", nullable = false, length = 10)
-    String name;
+    private String name;
 
     @ManyToMany(mappedBy = "tags")
     private List<Post> posts;

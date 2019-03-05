@@ -1,10 +1,7 @@
 package com.enkuru.springtry.model;
 
-import com.enkuru.springtry.util.Auditable;
-import lombok.AccessLevel;
+import com.enkuru.springtry.util.AuditableDate;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -17,40 +14,30 @@ import javax.validation.constraints.Email;
  */
 @Data
 @Entity
-@NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class User extends Auditable<User> {
+public class User extends AuditableDate<User> {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "USER_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    private Long id;
 
     @Column(name = "NAME")
-    String name;
+    private String name;
 
     @Column(name = "SURNAME")
-    String surname;
+    private String surname;
 
     @Column(name = "USERNAME", nullable = false, unique = true)
-    String username;
+    private String username;
 
     @Column(name = "PASSWORD", nullable = false)
-    String password;
+    private String password;
 
     @Email
     @Column(name = "EMAIL", nullable = false, unique = true)
-    String email;
+    private String email;
 
     @ManyToOne
     @JoinColumn(name = "ROLE_ID")
-    Role role;
-
-    public User(String name, String surname, String username, String password, @Email String email) {
-        this.name = name;
-        this.surname = surname;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-    }
+    private Role role;
 }

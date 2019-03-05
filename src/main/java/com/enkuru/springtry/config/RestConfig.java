@@ -15,7 +15,6 @@ import javax.persistence.metamodel.Type;
 
 @Configuration
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class RestConfig implements RepositoryRestConfigurer {
 
     final EntityManager entityManager;

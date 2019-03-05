@@ -23,9 +23,8 @@ import java.util.Collections;
 @Data
 @AllArgsConstructor
 @EqualsAndHashCode(of = {"id"})
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserPrincipal implements UserDetails {
-    Integer id;
+    Long id;
 
     String name;
 

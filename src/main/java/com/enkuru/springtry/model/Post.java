@@ -1,9 +1,7 @@
 package com.enkuru.springtry.model;
 
-import com.enkuru.springtry.util.Auditable;
-import lombok.AccessLevel;
+import com.enkuru.springtry.util.AuditableDate;
 import lombok.Data;
-import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.Filter;
 
 import javax.persistence.*;
@@ -17,33 +15,32 @@ import java.util.List;
  */
 @Data
 @Entity
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class Post extends Auditable<User> {
+public class Post extends AuditableDate<User> {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "POST_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    private Long id;
 
     @Column(name = "SUBJECT", nullable = false)
-    String subject;
+    private String subject;
 
     @Column(name = "CONTENT", nullable = false, length = 5000)
-    String content;
+    private String content;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "POST_TAG",
-            joinColumns = @JoinColumn(name = "POST_ID", referencedColumnName = "ID"),
-            inverseJoinColumns = @JoinColumn(name = "TAG_ID", referencedColumnName = "ID")
+            joinColumns = @JoinColumn(name = "POST_ID", referencedColumnName = "POST_ID"),
+            inverseJoinColumns = @JoinColumn(name = "TAG_ID", referencedColumnName = "TAG_ID")
     )
-    List<HashTag> tags;
+    private List<HashTag> tags;
 
     @OneToMany(mappedBy = "post")
     @Filter(name = "likeVote", condition = "TYPE = 'L'")
-    List<Vote> likeVotes;
+    private List<Vote> likeVotes;
 
     @OneToMany(mappedBy = "post")
     @Filter(name = "likeVote", condition = "TYPE = 'D'")
-    List<Vote> dislikeVotes;
+    private List<Vote> dislikeVotes;
 }

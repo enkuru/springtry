@@ -16,12 +16,12 @@ import java.util.Optional;
  * Time: 15:23
  */
 @RepositoryRestResource(excerptProjection = UserProjection.class)
-public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecificationExecutor<User> {
+public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
     Optional<User> findByEmail(String email);
 
     Optional<User> findByUsernameOrEmail(String username, String email);
 
-    List<User> findByIdIn(List<Integer> userIds);
+    List<User> findByIdIn(List<Long> userIds);
 
     Optional<User> findByUsername(String username);
 

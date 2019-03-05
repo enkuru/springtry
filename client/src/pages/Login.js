@@ -1,19 +1,11 @@
 import React, {Component} from 'react';
+import {Redirect} from 'react-router'
 import PropTypes from 'prop-types';
-import {
-  Avatar,
-  Button,
-  Checkbox,
-  CssBaseline,
-  FormControl,
-  FormControlLabel,
-  Input,
-  InputLabel,
-  Paper,
-  Typography
-} from '@material-ui/core';
+import {Avatar, Button, CssBaseline, FormControl, Input, InputLabel, Paper, Typography} from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import withStyles from '@material-ui/core/styles/withStyles';
+import {connect} from "react-redux";
+import {loginSubmit} from "../actions/login";
 
 const styles = theme => ({
   main: {
@@ -50,33 +42,55 @@ const styles = theme => ({
 class Login extends Component {
   static propTypes = {classes: PropTypes.object.isRequired};
 
+  state = {
+    usernameOrEmail: '',
+    password: ''
+  };
+
+  handleChange = e => this.setState({[e.target.name]: e.target.value});
+
+  submitForm = e => {
+    e.preventDefault();
+    const {usernameOrEmail, password} = this.state;
+
+    this.props.loginSubmit({usernameOrEmail, password});
+  };
+
   render() {
     const {classes} = this.props;
 
-    return (
-      <main className={classes.main}>
-        <CssBaseline/>
-        <Paper className={classes.paper}>
-          <Avatar className={classes.avatar}><LockOutlinedIcon/></Avatar>
-          <Typography component="h1" variant="h5">Sign in</Typography>
-          <form className={classes.form}>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="username">Username</InputLabel>
-              <Input id="username" name="username" autoComplete="username" autoFocus/>
-            </FormControl>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="password">Password</InputLabel>
-              <Input name="password" type="password" id="password" autoComplete="current-password"/>
-            </FormControl>
-            <FormControlLabel control={<Checkbox value="remember" color="primary"/>} label="Remember me"/>
-            <Button fullWidth type="submit" variant="contained" color="secondary" className={classes.submit}>
-              Sign in
-            </Button>
-          </form>
-        </Paper>
-      </main>
-    );
+    return this.props.login.loggedIn ? (<Redirect to="/admin-panel" push={true}/>)
+      : (<main className={classes.main}>
+          <CssBaseline/>
+          <Paper className={classes.paper}>
+            <Avatar className={classes.avatar}><LockOutlinedIcon/></Avatar>
+            <Typography component="h1" variant="h5">Sign in</Typography>
+            <form className={classes.form} onSubmit={this.submitForm}>
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="usernameOrEmail">Username or Email</InputLabel>
+                <Input id="usernameOrEmail" name="usernameOrEmail" value={this.state.usernameOrEmail}
+                       autoComplete="usernameOrEmail" onChange={this.handleChange} autoFocus/>
+              </FormControl>
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="password">Password</InputLabel>
+                <Input name="password" type="password" value={this.state.password} onChange={this.handleChange}
+                       id="password" autoComplete="current-password"/>
+              </FormControl>
+              {/*<FormControlLabel control={<Checkbox value="remember" color="primary"/>} label="Remember me"/>*/}
+              <Button fullWidth type="submit" variant="contained" color="secondary" className={classes.submit}>
+                Sign in
+              </Button>
+            </form>
+          </Paper>
+        </main>
+      );
   }
 }
 
-export default withStyles(styles)(Login);
+const mapStateToProps = ({login}) => {
+  return {login};
+};
+
+const mapDispatchToProps = {loginSubmit};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Login));
