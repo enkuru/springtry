@@ -87,9 +87,7 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = ({login}) => {
-  return {login};
-};
+const mapStateToProps = ({login}) => ({login});
 
 const mapDispatchToProps = {loginSubmit};
 

@@ -121,9 +121,7 @@ class UserDialog extends Component {
   }
 }
 
-const mapStateToProps = ({user}) => {
-  return {user};
-};
+const mapStateToProps = ({user}) => ({user});
 
 const mapDispatchToProps = {saveUser, updateUser};
 

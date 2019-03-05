@@ -1,12 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {withStyles} from '@material-ui/core/styles';
 
-const styles = {
-
-};
-
-class Role extends Component {
+class Post extends Component {
   static defaultProps = {};
 
   static propTypes = {};
@@ -15,9 +10,9 @@ class Role extends Component {
 
   render() {
     return (
-      <div>Roles</div>
+      <div>posts</div>
     );
   }
 }
 
-export default withStyles(styles)(Role);
+export default Post;
