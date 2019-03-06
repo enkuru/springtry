@@ -22,7 +22,7 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 @Data
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class AuditableDate<U> {
+public abstract class AuditableDate {
 
     @CreatedDate
     @Temporal(TIMESTAMP)

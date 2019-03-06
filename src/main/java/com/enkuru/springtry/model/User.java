@@ -14,7 +14,7 @@ import javax.validation.constraints.Email;
  */
 @Data
 @Entity
-public class User extends AuditableDate<User> {
+public class User extends AuditableDate {
 
     @Id
     @Column(name = "USER_ID")

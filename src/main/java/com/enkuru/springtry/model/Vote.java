@@ -14,7 +14,7 @@ import javax.persistence.*;
  */
 @Data
 @Entity
-public class Vote extends AuditableDate<User> {
+public class Vote extends AuditableDate {
 
     @Id
     @Column(name = "VOTE_ID")

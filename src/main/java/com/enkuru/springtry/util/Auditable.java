@@ -1,5 +1,6 @@
 package com.enkuru.springtry.util;
 
+import com.enkuru.springtry.model.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedBy;
@@ -22,13 +23,13 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 @Data
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class Auditable<U> extends AuditableDate<U> {
+public abstract class Auditable extends AuditableDate {
 
     @ManyToOne
     @CreatedBy
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @JoinColumn(name = "CREATED_BY", updatable = false)
-    U createdBy;
+    User createdBy;
 
     @CreatedDate
     @Temporal(TIMESTAMP)
@@ -40,7 +41,7 @@ public abstract class Auditable<U> extends AuditableDate<U> {
     @LastModifiedBy
     @JoinColumn(name = "UPDATED_BY")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    U lastModifiedBy;
+    User lastModifiedBy;
 
     @LastModifiedDate
     @Temporal(TIMESTAMP)

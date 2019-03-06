@@ -12,8 +12,8 @@ import {BrowserRouter} from 'react-router-dom';
 axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem('token');
 
 axios.interceptors.response.use(undefined, function (error) {
-  if (error.response.status === 401) {
-    window.location.href = '/';
+  if (!window.location.href.indexOf('login') && error.response.status === 401) {
+    window.location.href = '/login';
   }
 
   return Promise.reject(error);
@@ -24,4 +24,4 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-serviceWorker.register();
+serviceWorker.unregister();

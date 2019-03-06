@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Data
 @Entity
-public class Post extends AuditableDate<User> {
+public class Post extends AuditableDate {
 
     @Id
     @Column(name = "POST_ID")

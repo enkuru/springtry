@@ -13,7 +13,7 @@ import javax.persistence.*;
  */
 @Data
 @Entity
-public class Comment extends AuditableDate<User> {
+public class Comment extends AuditableDate {
 
     @Id
     @Column(name = "COMMENT_ID")

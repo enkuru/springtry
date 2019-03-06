@@ -1,6 +1,9 @@
 package com.enkuru.springtry.config;
 
+import com.enkuru.springtry.model.User;
+import com.enkuru.springtry.repository.UserRepository;
 import com.enkuru.springtry.security.UserPrincipal;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -18,29 +21,31 @@ import java.util.Optional;
  * Time: 11:56
  */
 @Configuration
-@EnableJpaAuditing
+@RequiredArgsConstructor
+@EnableJpaAuditing(auditorAwareRef = "auditorProvider")
 public class JpaConfig {
 
+    private final UserRepository userRepository;
+
     @Bean
-    public AuditorAware<Long> auditorProvider() {
+    public AuditorAware<User> auditorProvider() {
         return new SpringSecurityAuditAwareImpl();
     }
 
-    class SpringSecurityAuditAwareImpl implements AuditorAware<Long> {
+    class SpringSecurityAuditAwareImpl implements AuditorAware<User> {
 
         @Override
-        public Optional<Long> getCurrentAuditor() {
+        public Optional<User> getCurrentAuditor() {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            boolean noAuth = authentication == null || !authentication.isAuthenticated();
 
-            if (authentication == null ||
-                    !authentication.isAuthenticated() ||
-                    authentication instanceof AnonymousAuthenticationToken) {
+            if (noAuth || authentication instanceof AnonymousAuthenticationToken) {
                 return Optional.empty();
             }
 
             UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
 
-            return Optional.of(Long.parseLong(userPrincipal.getId().toString()));
+            return Optional.of(userRepository.getOne(userPrincipal.getId()));
         }
     }
 }

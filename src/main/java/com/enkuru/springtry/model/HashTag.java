@@ -1,6 +1,6 @@
 package com.enkuru.springtry.model;
 
-import com.enkuru.springtry.util.AuditableDate;
+import com.enkuru.springtry.util.Auditable;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Data
 @Entity
-public class HashTag extends AuditableDate<User> {
+public class HashTag extends Auditable {
 
     @Id
     @Column(name = "TAG_ID")
