@@ -5,7 +5,7 @@ import {Avatar, Button, CssBaseline, FormControl, Input, InputLabel, Paper, Typo
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import withStyles from '@material-ui/core/styles/withStyles';
 import {connect} from "react-redux";
-import {loginSubmit} from "../actions/login";
+import {loginSubmit} from "../../actions/login";
 
 const styles = theme => ({
   main: {
@@ -39,7 +39,7 @@ const styles = theme => ({
   },
 });
 
-class Login extends Component {
+class Index extends Component {
   static propTypes = {classes: PropTypes.object.isRequired};
 
   state = {
@@ -91,4 +91,4 @@ const mapStateToProps = ({login}) => ({login});
 
 const mapDispatchToProps = {loginSubmit};
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Login));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Index));

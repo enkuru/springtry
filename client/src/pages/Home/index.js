@@ -3,7 +3,7 @@ import {withStyles} from '@material-ui/core/styles';
 
 const styles = {};
 
-class Home extends Component {
+class Index extends Component {
   render() {
     return (
       <div>This is Home Dude!!</div>
@@ -11,4 +11,4 @@ class Home extends Component {
   }
 }
 
-export default withStyles(styles)(Home);
+export default withStyles(styles)(Index);

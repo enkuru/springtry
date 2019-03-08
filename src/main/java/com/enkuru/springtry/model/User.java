@@ -2,6 +2,7 @@ package com.enkuru.springtry.model;
 
 import com.enkuru.springtry.util.AuditableDate;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -14,6 +15,7 @@ import javax.validation.constraints.Email;
  */
 @Data
 @Entity
+@EqualsAndHashCode(callSuper = false, of = {"id"})
 public class User extends AuditableDate {
 
     @Id

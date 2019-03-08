@@ -49,6 +49,7 @@ class Header extends Component {
           {/*<Menu/>*/}
           <Button color="primary" to="/admin-panel" className={`${classes.menuButton} ${classes.header}`} exact component={NavLink}><Home/>&nbsp;Admin Panel</Button>
           <Button color="primary" to="/users" className={classes.menuButton} exact component={NavLink}>Users</Button>
+          <Button color="primary" to="/tags" className={classes.menuButton} exact component={NavLink}>Tags</Button>
           <Button color="primary" to="/posts" className={classes.menuButton} exact component={NavLink}>Posts</Button>
           <Typography variant="h6" color="inherit" className={classes.grow}>{}</Typography>
           <Typography variant="body1" color="inherit"className={classes.username} >{login.loggedUser ? login.loggedUser.username : ''}</Typography>

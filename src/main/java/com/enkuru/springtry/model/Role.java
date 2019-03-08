@@ -1,6 +1,7 @@
 package com.enkuru.springtry.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
@@ -12,6 +13,7 @@ import javax.persistence.*;
  */
 @Data
 @Entity
+@EqualsAndHashCode(callSuper = false, of = {"id"})
 public class Role {
 
     @Id

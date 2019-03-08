@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import {fetchRoles} from './../actions/role';
-import {deleteUser, fetchUsers, loadUser} from './../actions/user';
-import UserTable from './../components/UserTable';
+import {fetchRoles} from '../../actions/role';
+import {deleteUser, fetchUsers, loadUser} from '../../actions/user';
+import UserTable from './components/UserTable';
 
-class User extends Component {
+class Index extends Component {
   static propTypes = {
     user: PropTypes.object.isRequired,
   };
@@ -31,4 +31,4 @@ const mapStateToProps = ({user}) => ({user});
 
 const mapDispatchToProps = {fetchRoles, fetchUsers, loadUser, deleteUser};
 
-export default connect(mapStateToProps, mapDispatchToProps)(User);
+export default connect(mapStateToProps, mapDispatchToProps)(Index);

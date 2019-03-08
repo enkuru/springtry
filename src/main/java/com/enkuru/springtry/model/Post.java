@@ -1,7 +1,8 @@
 package com.enkuru.springtry.model;
 
-import com.enkuru.springtry.util.AuditableDate;
+import com.enkuru.springtry.util.Auditable;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Filter;
 
 import javax.persistence.*;
@@ -15,7 +16,8 @@ import java.util.List;
  */
 @Data
 @Entity
-public class Post extends AuditableDate {
+@EqualsAndHashCode(callSuper = false, of = {"id"})
+public class Post extends Auditable {
 
     @Id
     @Column(name = "POST_ID")

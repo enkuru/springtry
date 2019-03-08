@@ -1,7 +1,8 @@
 package com.enkuru.springtry.model;
 
-import com.enkuru.springtry.util.AuditableDate;
+import com.enkuru.springtry.util.Auditable;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
@@ -13,7 +14,8 @@ import javax.persistence.*;
  */
 @Data
 @Entity
-public class Comment extends AuditableDate {
+@EqualsAndHashCode(callSuper = false, of = {"id"})
+public class Comment extends Auditable {
 
     @Id
     @Column(name = "COMMENT_ID")

@@ -14,7 +14,7 @@ import {
   Select
 } from "@material-ui/core";
 import {connect} from "react-redux";
-import {saveUser, updateUser} from './../actions/user';
+import {saveUser, updateUser} from '../../../actions/user';
 import {withStyles} from "@material-ui/core/styles/index";
 
 const styles = theme => ({
@@ -63,7 +63,6 @@ class UserDialog extends Component {
     const onEditMode = !!this.state.id;
     const onClose = () => this.handleModal(false);
 
-    console.log("state - ", this.state);
     return (
       <div>
         <Dialog open={this.state.showModal} onClose={onClose} aria-labelledby="responsive-dialog-title">
@@ -113,7 +112,7 @@ class UserDialog extends Component {
             <Button className={classes.btn} onClick={onClose}
                     variant="outlined" color="secondary">Cancel</Button>
             <Button className={classes.btn} onClick={this.saveOrUpdateUser}
-                    variant="outlined" color="primary" autoFocus>{onEditMode ? "Update" : "Save"}</Button>
+                    variant="outlined" color="primary">{onEditMode ? "Update" : "Save"}</Button>
           </DialogActions>
         </Dialog>
       </div>
