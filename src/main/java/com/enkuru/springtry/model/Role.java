@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Create Info
@@ -14,7 +15,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = false, of = {"id"})
-public class Role {
+public class Role implements Serializable {
 
     @Id
     @Column(name = "ROLE_ID")

@@ -1,17 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
-import {
-  Button,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Toolbar,
-  Typography
-} from '@material-ui/core';
+import {Button, Paper, Table, TableBody, TableCell, TableHead, TableRow, Toolbar, Typography} from '@material-ui/core';
 import PostDialog from "./PostDialog";
 import {green, lightBlue, red} from '@material-ui/core/colors';
 
@@ -46,7 +36,7 @@ const styles = theme => ({
   },
   editBtn: {
     color: '#fff',
-    marginRight:'10px',
+    marginRight: '10px',
     backgroundColor: green[500],
     '&:hover': {
       backgroundColor: green[700],
@@ -83,7 +73,7 @@ class PostTable extends Component {
           <TableHead>
             <TableRow>
               <TableCell component="th" align="center">Subject</TableCell>
-              <TableCell component="th" align="center">Content</TableCell>
+              <TableCell component="th" align="center">Hash Tags</TableCell>
               <TableCell component="th" align="center">Operations</TableCell>
             </TableRow>
           </TableHead>
@@ -91,10 +81,14 @@ class PostTable extends Component {
             {postList ? postList.map(post => (
               <TableRow key={post.id}>
                 <TableCell align="center" scope="row">{post.subject}</TableCell>
-                <TableCell align="center" scope="row">{post.content}</TableCell>
+                <TableCell align="center" scope="row">{/*<div dangerouslySetInnerHTML={{__html: post.content}}/>*/}
+                  {post.tags.map(tag => tag.name).join(", ")}
+                </TableCell>
                 <TableCell align="center" scope="row">
-                  <Button variant="outlined" className={`${classes.btn} ${classes.editBtn}`} onClick={() => loadPost(post)}>Edit</Button>
-                  <Button variant="outlined" className={`${classes.btn} ${classes.deleteBtn}`} onClick={() => deletePost(post.id)}>Delete</Button>
+                  <Button variant="outlined" className={`${classes.btn} ${classes.editBtn}`}
+                          onClick={() => loadPost(post)}>Edit</Button>
+                  <Button variant="outlined" className={`${classes.btn} ${classes.deleteBtn}`}
+                          onClick={() => deletePost(post.id)}>Delete</Button>
                 </TableCell>
               </TableRow>
             )) : emptyInfo}

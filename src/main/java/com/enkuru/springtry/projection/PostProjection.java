@@ -1,11 +1,10 @@
 package com.enkuru.springtry.projection;
 
-import com.enkuru.springtry.model.HashTag;
 import com.enkuru.springtry.model.Post;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.core.config.Projection;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Create Info
@@ -21,7 +20,7 @@ public interface PostProjection {
 
     String getContent();
 
-    List<HashTag> getTags();
+    Set<HashTagProjection> getTags();
 
     @Value("#{target.getLikeVotes().size()}")
     int getLikeVoteCount();

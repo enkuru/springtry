@@ -1,11 +1,11 @@
 package com.enkuru.springtry.config;
 
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import org.reflections.Reflections;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.projection.ProjectionFactory;
+import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.data.rest.core.config.Projection;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
@@ -18,6 +18,11 @@ import javax.persistence.metamodel.Type;
 public class RestConfig implements RepositoryRestConfigurer {
 
     final EntityManager entityManager;
+
+    @Bean
+    public ProjectionFactory projectionFactory() {
+        return new SpelAwareProxyProjectionFactory();
+    }
 
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {

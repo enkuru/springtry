@@ -1,22 +1,17 @@
 package com.enkuru.springtry.controller;
 
-import com.enkuru.springtry.model.HashTag;
 import com.enkuru.springtry.model.Post;
-import com.enkuru.springtry.repository.HashTagRepository;
-import com.enkuru.springtry.repository.PostRepository;
+import com.enkuru.springtry.projection.PostProjection;
+import com.enkuru.springtry.service.PostService;
 import com.enkuru.springtry.util.Constants;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Create Info
@@ -29,28 +24,36 @@ import java.util.stream.Collectors;
 @RequestMapping(Constants.API_BASE + "/posts")
 @RequiredArgsConstructor
 public class PostController {
-    final PostRepository postRepository;
 
-    final HashTagRepository hashTagRepository;
+    final ProjectionFactory projectionFactory;
 
-    final PasswordEncoder passwordEncoder;
+    final PostService postService;
 
-    @PostMapping("/save")
+    @GetMapping
+    public Stream<PostProjection> getAll() {
+        List<Post> posts = postService.getAll();
+
+        return posts
+                .stream()
+                .map(post -> projectionFactory.createProjection(PostProjection.class, post));
+    }
+
+    @PostMapping
     public ResponseEntity<?> save(@Valid @RequestBody Post post) {
-        List<HashTag> hashTags = post.getTags().stream().peek(ht -> {
-            if (ht.getId() != null) {
-                ht = hashTagRepository.getOne(ht.getId());
-            } else {
-                ht.setPosts(new ArrayList<>());
-            }
-
-            ht.getPosts().add(post);
-        }).collect(Collectors.toList());
-
-        post.setTags(hashTags);
-
-        Post result = postRepository.save(post);
+        Post result = postService.save(null, post);
 
         return ResponseEntity.ok(result);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody Post post) {
+        Post result = postService.save(id, post);
+
+        return ResponseEntity.ok(result);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        postService.delete(id);
     }
 }

@@ -6,7 +6,9 @@ import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Filter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Create Info
@@ -17,7 +19,7 @@ import java.util.List;
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = false, of = {"id"})
-public class Post extends Auditable {
+public class Post extends Auditable implements Serializable {
 
     @Id
     @Column(name = "POST_ID")
@@ -30,13 +32,14 @@ public class Post extends Auditable {
     @Column(name = "CONTENT", nullable = false, length = 5000)
     private String content;
 
-    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "POST_TAG",
             joinColumns = @JoinColumn(name = "POST_ID", referencedColumnName = "POST_ID"),
             inverseJoinColumns = @JoinColumn(name = "TAG_ID", referencedColumnName = "TAG_ID")
     )
-    private List<HashTag> tags;
+    @OrderBy("name ASC")
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+    private Set<HashTag> tags;
 
     @OneToMany(mappedBy = "post")
     @Filter(name = "likeVote", condition = "TYPE = 'L'")

@@ -1,11 +1,13 @@
 package com.enkuru.springtry.model;
 
 import com.enkuru.springtry.util.AuditableDate;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.io.Serializable;
 
 /**
  * Create Info
@@ -16,7 +18,8 @@ import javax.validation.constraints.Email;
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = false, of = {"id"})
-public class User extends AuditableDate {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class User extends AuditableDate implements Serializable {
 
     @Id
     @Column(name = "USER_ID")

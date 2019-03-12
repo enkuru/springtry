@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Create Info
@@ -15,7 +16,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = false, of = {"id"})
-public class Comment extends Auditable {
+public class Comment extends Auditable implements Serializable {
 
     @Id
     @Column(name = "COMMENT_ID")

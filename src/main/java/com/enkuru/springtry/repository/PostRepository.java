@@ -10,6 +10,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
  * Date: 25/02/2019
  * Time: 15:25
  */
-@RepositoryRestResource
+@RepositoryRestResource(exported = false)
 public interface PostRepository extends JpaRepository<Post, Long> {
 }

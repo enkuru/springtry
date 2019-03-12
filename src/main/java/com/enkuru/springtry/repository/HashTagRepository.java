@@ -12,4 +12,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
  */
 @RepositoryRestResource
 public interface HashTagRepository extends JpaRepository<HashTag, Long> {
+    HashTag findHashTagByName(String name);
 }

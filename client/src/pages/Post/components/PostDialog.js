@@ -10,7 +10,9 @@ import {
   Input,
   InputLabel
 } from "@material-ui/core";
+import update from 'immutability-helper';
 import RichTextEditor from 'react-rte';
+import ChipInput from 'material-ui-chip-input'
 import {connect} from "react-redux";
 import {savePost, updatePost} from '../../../actions/post';
 import {withStyles} from "@material-ui/core/styles/index";
@@ -55,7 +57,13 @@ class PostDialog extends Component {
 
   handleModal = modalState => this.setState({showModal: modalState});
 
-  saveOrUpdatePost = () => {
+  addTag = tag => this.setState({tags: update(this.state.tags, {$push: [{name: tag}]})});
+
+  removeTag = index => this.setState(update(this.state, {tags: {$splice: [[index, 1]]}}));
+
+  saveOrUpdatePost = (e) => {
+    e.preventDefault();
+
     const {id, subject, richContent, tags} = this.state;
     const post = {id, subject, content: richContent.toString('html'), tags};
 
@@ -69,18 +77,23 @@ class PostDialog extends Component {
 
     return (
       <div>
-        <Dialog open={this.state.showModal} onClose={onClose} aria-labelledby="responsive-dialog-title">
+        <Dialog open={this.state.showModal} onClose={onClose} maxWidth='lg' fullWidth={true}
+                aria-labelledby="responsive-dialog-title">
           <DialogTitle id="responsive-dialog-title" align="center">{onEditMode ? "Edit Post" : "New Post"}</DialogTitle>
           <DialogContent>
             <form className={classes.form}>
               <FormControl margin="normal" fullWidth>
                 <InputLabel htmlFor="subject">Subject</InputLabel>
-                <Input value={this.state.subject} id="subject" name="subject" onChange={this.handleChange} autoFocus/>
+                <Input value={this.state.subject} id="subject" name="subject" onChange={this.handleChange}
+                       autoFocus/>
               </FormControl>
               <FormControl margin="normal" fullWidth>
                 <InputLabel htmlFor="content">Content</InputLabel>
-                <RichTextEditor value={this.state.richContent} id="content" name="content"
-                                onChange={this.handleRichInput}/>
+                <RichTextEditor value={this.state.richContent} id="content" onChange={this.handleRichInput}/>
+              </FormControl>
+              <FormControl margin="normal" fullWidth>
+                <ChipInput id="tags" label="Hash Tags" value={this.state.tags.map((tag) => tag.name)}
+                           onAdd={(tag) => this.addTag(tag)} onDelete={(chip, index) => this.removeTag(index)}/>
               </FormControl>
             </form>
           </DialogContent>

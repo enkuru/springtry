@@ -38,7 +38,7 @@ export function loadPost(post = emptyPost) {
 
 const fetchPostList = dispatch => dispatch({
   type: FETCH_POSTS,
-  payload: axios.get(`${API_BASE}/posts`).then(res => res.data._embedded.posts)
+  payload: axios.get(`${API_BASE}/posts`).then(res => res.data)
 });
 
 export function fetchPosts() {
