@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import {deletePost, fetchPosts, loadPost} from '../../actions/post';
+import {fetchCategories} from '../../actions/category';
 import PostTable from './components/PostTable';
 
 class Index extends Component {
@@ -12,6 +13,7 @@ class Index extends Component {
 
   componentDidMount() {
     this.props.fetchPosts();
+    this.props.fetchCategories();
   }
 
   render() {
@@ -19,7 +21,8 @@ class Index extends Component {
 
     return (
       <div>
-        <PostTable postList={post.postList} loadPost={loadPost} deletePost={deletePost}/>
+        <PostTable postList={post.postList} categoryList={post.categoryList}
+                   loadPost={loadPost} deletePost={deletePost}/>
       </div>
     );
   }
@@ -27,6 +30,6 @@ class Index extends Component {
 
 const mapStateToProps = ({post}) => ({post});
 
-const mapDispatchToProps = {fetchPosts, loadPost, deletePost};
+const mapDispatchToProps = {fetchPosts, fetchCategories, loadPost, deletePost};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Index);

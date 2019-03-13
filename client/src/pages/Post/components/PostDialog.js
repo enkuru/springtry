@@ -7,8 +7,11 @@ import {
   DialogContent,
   DialogTitle,
   FormControl,
+  Grid,
   Input,
-  InputLabel
+  InputLabel,
+  MenuItem,
+  Select
 } from "@material-ui/core";
 import update from 'immutability-helper';
 import RichTextEditor from 'react-rte';
@@ -64,30 +67,40 @@ class PostDialog extends Component {
   saveOrUpdatePost = (e) => {
     e.preventDefault();
 
-    const {id, subject, richContent, tags} = this.state;
-    const post = {id, subject, content: richContent.toString('html'), tags};
+    const {id, subject, richContent: content, tags, categoryId} = this.state;
+    const post = {id, subject, content: content.toString('html'), category: {id: categoryId}, tags};
 
     post.id ? this.props.updatePost(post) : this.props.savePost(post);
   };
 
   render() {
-    const {classes} = this.props;
+    const {classes, categoryList} = this.props;
     const onEditMode = !!this.state.id;
     const onClose = () => this.handleModal(false);
 
     return (
       <div>
-        <Dialog open={this.state.showModal} onClose={onClose} maxWidth='lg' fullWidth={true}
-                aria-labelledby="responsive-dialog-title">
+        <Dialog open={this.state.showModal} onClose={onClose} maxWidth='lg' fullWidth={true} aria-labelledby="responsive-dialog-title">
           <DialogTitle id="responsive-dialog-title" align="center">{onEditMode ? "Edit Post" : "New Post"}</DialogTitle>
           <DialogContent>
             <form className={classes.form}>
-              <FormControl margin="normal" fullWidth>
-                <InputLabel htmlFor="subject">Subject</InputLabel>
-                <Input value={this.state.subject} id="subject" name="subject" onChange={this.handleChange}
-                       autoFocus/>
-              </FormControl>
-              <FormControl margin="normal" fullWidth>
+              <Grid container spacing={8}>
+                <Grid item xs={6}>
+                  <FormControl margin="normal" fullWidth required>
+                    <InputLabel htmlFor="subject">Subject</InputLabel>
+                    <Input value={this.state.subject} id="subject" name="subject" onChange={this.handleChange} autoFocus/>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={6}>
+                  <FormControl margin="normal" fullWidth required>
+                    <InputLabel htmlFor="category">Category</InputLabel>
+                    <Select id="category" value={this.state.categoryId} onChange={this.handleChange} name="categoryId">
+                      {categoryList.map(category => (<MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </Grid>
+              <FormControl margin="normal" fullWidth required>
                 <InputLabel htmlFor="content">Content</InputLabel>
                 <RichTextEditor value={this.state.richContent} id="content" onChange={this.handleRichInput}/>
               </FormControl>

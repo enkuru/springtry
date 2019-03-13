@@ -32,6 +32,10 @@ public class Post extends Auditable implements Serializable {
     @Column(name = "CONTENT", nullable = false, length = 5000)
     private String content;
 
+    @ManyToOne
+    @JoinColumn(name = "CATEGORY_ID", nullable = false)
+    private Category category;
+
     @JoinTable(
             name = "POST_TAG",
             joinColumns = @JoinColumn(name = "POST_ID", referencedColumnName = "POST_ID"),

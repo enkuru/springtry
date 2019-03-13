@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import {Button, Paper, Table, TableBody, TableCell, TableHead, TableRow, Toolbar, Typography} from '@material-ui/core';
-import PostDialog from "./PostDialog";
+import CategoryDialog from "./CategoryDialog";
 import {green, lightBlue, red} from '@material-ui/core/colors';
 
 const styles = theme => ({
@@ -36,7 +36,7 @@ const styles = theme => ({
   },
   editBtn: {
     color: '#fff',
-    marginRight: '10px',
+    marginRight:'10px',
     backgroundColor: green[500],
     '&:hover': {
       backgroundColor: green[700],
@@ -44,11 +44,11 @@ const styles = theme => ({
   },
 });
 
-class PostTable extends Component {
+class CategoryTable extends Component {
   static propTypes = {classes: PropTypes.object.isRequired};
 
   render() {
-    const {classes, postList, categoryList, loadPost, deletePost} = this.props;
+    const {classes, categoryList, loadCategory, deleteCategory} = this.props;
 
     const emptyInfo = (
       <TableRow key={-1}>
@@ -59,11 +59,11 @@ class PostTable extends Component {
     return (
       <Paper className={classes.root}>
         <Toolbar>
-          <Typography variant="h6" color="inherit">Post Management</Typography>
+          <Typography variant="h6" color="inherit">Category Management</Typography>
           <Typography variant="h6" color="inherit" className={classes.grow}>
-            <PostDialog categoryList={categoryList}/>
+            <CategoryDialog categoryList={categoryList}/>
           </Typography>
-          <Button variant="contained" onClick={() => loadPost()} color="primary"
+          <Button variant="contained" onClick={() => loadCategory()} color="primary"
                   className={`${classes.btn} ${classes.addNewBtn}`}>
             Add New
           </Button>
@@ -72,25 +72,19 @@ class PostTable extends Component {
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              <TableCell component="th" align="center">Subject</TableCell>
-              <TableCell component="th" align="center">Category</TableCell>
-              <TableCell component="th" align="center">Hash Tags</TableCell>
+              <TableCell component="th" align="center">Name</TableCell>
+              <TableCell component="th" align="center">Parent Category</TableCell>
               <TableCell component="th" align="center">Operations</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {postList ? postList.map(post => (
-              <TableRow key={post.id}>
-                <TableCell align="center" scope="row">{post.subject}</TableCell>
-                <TableCell align="center" scope="row">{post.categoryName}</TableCell>
-                <TableCell align="center" scope="row">{/*<div dangerouslySetInnerHTML={{__html: post.content}}/>*/}
-                  {post.tags.map(tag => tag.name).join(", ")}
-                </TableCell>
+            {categoryList ? categoryList.map(category => (
+              <TableRow key={category.id}>
+                <TableCell align="center" scope="row">{category.name}</TableCell>
+                <TableCell align="center" scope="row">{category.parentCategoryName || "-"}</TableCell>
                 <TableCell align="center" scope="row">
-                  <Button variant="outlined" className={`${classes.btn} ${classes.editBtn}`}
-                          onClick={() => loadPost(post)}>Edit</Button>
-                  <Button variant="outlined" className={`${classes.btn} ${classes.deleteBtn}`}
-                          onClick={() => deletePost(post.id)}>Delete</Button>
+                  <Button variant="outlined" className={`${classes.btn} ${classes.editBtn}`} onClick={() => loadCategory(category)}>Edit</Button>
+                  <Button variant="outlined" className={`${classes.btn} ${classes.deleteBtn}`} onClick={() => deleteCategory(category.id)}>Delete</Button>
                 </TableCell>
               </TableRow>
             )) : emptyInfo}
@@ -101,4 +95,4 @@ class PostTable extends Component {
   }
 }
 
-export default withStyles(styles)(PostTable);
+export default withStyles(styles)(CategoryTable);

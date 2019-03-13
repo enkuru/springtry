@@ -8,10 +8,12 @@ import {
   DialogTitle,
   FormControl,
   Input,
-  InputLabel
+  InputLabel,
+  MenuItem,
+  Select
 } from "@material-ui/core";
 import {connect} from "react-redux";
-import {saveHashTag, updateHashTag} from '../../../actions/hashTag';
+import {saveCategory, updateCategory} from '../../../actions/category';
 import {withStyles} from "@material-ui/core/styles/index";
 
 const styles = theme => ({
@@ -27,18 +29,18 @@ const styles = theme => ({
   },
 });
 
-class HashTagDialog extends Component {
+class CategoryDialog extends Component {
   static propTypes = {classes: PropTypes.object.isRequired};
 
   state = {
-    ...this.props.hashTag.currentHashTag,
-    showModal: this.props.hashTag.showModal,
+    ...this.props.category.currentCategory,
+    showModal: this.props.category.showModal,
   };
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      showModal: nextProps.hashTag.showModal,
-      ...nextProps.hashTag.currentHashTag,
+      showModal: nextProps.category.showModal,
+      ...nextProps.category.currentCategory,
     });
   }
 
@@ -46,26 +48,35 @@ class HashTagDialog extends Component {
 
   handleModal = modalState => this.setState({showModal: modalState});
 
-  saveOrUpdateHashTag = () => {
-    const {id, name} = this.state;
-    const hashTag = {id, name};
+  saveOrUpdateCategory = () => {
+    const {id, name, parentCategoryId} = this.state;
+    const category = {id, name};
 
-    hashTag.id ? this.props.updateHashTag(hashTag) : this.props.saveHashTag(hashTag);
+    category.parentCategory = parentCategoryId ? {id: parentCategoryId} : undefined;
+
+    category.id ? this.props.updateCategory(category) : this.props.saveCategory(category);
   };
 
   render() {
-    const {classes} = this.props;
+    const {classes, categoryList} = this.props;
     const onEditMode = !!this.state.id;
     const onClose = () => this.handleModal(false);
 
     return (
       <div>
         <Dialog open={this.state.showModal} onClose={onClose} aria-labelledby="responsive-dialog-title">
-          <DialogTitle id="responsive-dialog-title"
-                       align="center">{onEditMode ? "Edit HashTag" : "New HashTag"}</DialogTitle>
+          <DialogTitle id="responsive-dialog-title" align="center">
+            {onEditMode ? "Edit Category" : "New Category"}
+          </DialogTitle>
           <DialogContent>
             <form className={classes.form}>
-              <FormControl margin="normal" fullWidth required>
+              <FormControl margin="normal" fullWidth>
+                <InputLabel htmlFor="parentCategory">Parent Category</InputLabel>
+                <Select id="parentCategory" value={this.state.parentCategoryId} onChange={this.handleChange} name="parentCategoryId">
+                  {categoryList.map(parent => (<MenuItem key={parent.id} value={parent.id}>{parent.name}</MenuItem>))}
+                </Select>
+              </FormControl>
+              <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="name">Name</InputLabel>
                 <Input value={this.state.name} id="name" name="name" onChange={this.handleChange} autoFocus/>
               </FormControl>
@@ -73,7 +84,7 @@ class HashTagDialog extends Component {
           </DialogContent>
           <DialogActions>
             <Button className={classes.btn} onClick={onClose} variant="outlined" color="secondary">Cancel</Button>
-            <Button className={classes.btn} onClick={this.saveOrUpdateHashTag} variant="outlined"
+            <Button className={classes.btn} onClick={this.saveOrUpdateCategory} variant="outlined"
                     color="primary">{onEditMode ? "Update" : "Save"}</Button>
           </DialogActions>
         </Dialog>
@@ -82,8 +93,8 @@ class HashTagDialog extends Component {
   }
 }
 
-const mapStateToProps = ({hashTag}) => ({hashTag});
+const mapStateToProps = ({category}) => ({category});
 
-const mapDispatchToProps = {saveHashTag, updateHashTag};
+const mapDispatchToProps = {saveCategory, updateCategory};
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(HashTagDialog));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(CategoryDialog));

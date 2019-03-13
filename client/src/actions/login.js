@@ -38,7 +38,15 @@ export function loginSubmit(loginInfo) {
 
 export function authMe() {
   return dispatch => getAuthInfo(dispatch).catch(() => {
+    delete axios.defaults.headers.common['Authorization'];
     localStorage.removeItem('token');
     authRejected(dispatch);
   });
+}
+
+export function logout() {
+  localStorage.removeItem('token');
+  delete axios.defaults.headers.common['Authorization'];
+
+  return dispatch => getAuthInfo(dispatch).catch(() => authRejected(dispatch))
 }

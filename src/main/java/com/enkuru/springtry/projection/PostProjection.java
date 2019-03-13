@@ -20,6 +20,12 @@ public interface PostProjection {
 
     String getContent();
 
+    @Value("#{target.getCategory().getId()}")
+    Long getCategoryId();
+
+    @Value("#{target.getCategory().getName()}")
+    String getCategoryName();
+
     Set<HashTagProjection> getTags();
 
     @Value("#{target.getLikeVotes().size()}")

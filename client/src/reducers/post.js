@@ -1,11 +1,13 @@
 import {emptyPost} from './../config/constants';
 
 import * as postActions from './../actions/post';
+import * as categoryActions from "../actions/category";
 
 const initialState = {
   fetching: false,
   error: {},
   postList: [],
+  categoryList: [],
   currentPost: emptyPost,
   showModal: false
 };
@@ -15,6 +17,14 @@ export default (state = initialState, action) => {
     //LOAD_POST
     case postActions.LOAD_POST:
       return {...state, currentPost: action.payload, showModal: true};
+
+    //FETCH CATEGORIES
+    case categoryActions.FETCH_CATEGORIES_PENDING:
+      return {...state, fetching: true};
+    case categoryActions.FETCH_CATEGORIES_FULFILLED:
+      return {...state, fetching: false, categoryList: action.payload};
+    case categoryActions.FETCH_CATEGORIES_REJECTED:
+      return {...state, fetching: false, error: action.payload};
 
     //FETCH POSTS
     case postActions.FETCH_POSTS_PENDING:

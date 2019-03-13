@@ -1,14 +1,21 @@
 import React, {Component} from 'react';
-import {withStyles} from '@material-ui/core/styles';
-
-const styles = {};
+import {authMe} from "../../actions/login";
+import {connect} from "react-redux";
+import {Redirect} from "react-router";
 
 class Index extends Component {
   render() {
-    return (
+    const {login} = this.props;
+
+    return login.loggedIn ? (
       <div>This is Home Dude!!</div>
-    );
+    ) : <Redirect to="/login"/>;
   }
 }
 
-export default withStyles(styles)(Index);
+
+const mapStateToProps = ({login}) => ({login});
+
+const mapDispatchToProps = {authMe};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Index);

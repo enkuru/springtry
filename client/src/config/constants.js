@@ -9,4 +9,5 @@ export const emptyUser = {
 };
 
 export const emptyHashTag = {id: undefined, name: ""};
-export const emptyPost = {id: undefined, subject: "", content: "", tags: []};
+export const emptyCategory = {id: undefined, name: "", parentCategoryId: undefined, parentCategoryName: ""};
+export const emptyPost = {id: undefined, subject: "", content: "", categoryId: 0, categoryName: "", tags: []};

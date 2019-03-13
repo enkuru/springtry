@@ -9,6 +9,7 @@ import Home from './pages/Home/index';
 import User from './pages/User/index';
 import Post from './pages/Post/index';
 import HashTag from './pages/HashTag/index';
+import Category from './pages/Category/index';
 
 class App extends Component {
 
@@ -22,6 +23,7 @@ class App extends Component {
           <PrivateRoute exact path='/users' component={User}/>
           <PrivateRoute exact path='/posts' component={Post}/>
           <PrivateRoute exact path='/tags' component={HashTag}/>
+          <PrivateRoute exact path='/categories' component={Category}/>
         </Switch>
       </div>
     );
