@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {deletePost, fetchPosts, loadPost} from '../../actions/post';
 import {fetchCategories} from '../../actions/category';
 import PostTable from './components/PostTable';
+import Header from "../../components/Header";
 
 class Index extends Component {
   static propTypes = {
@@ -21,8 +22,8 @@ class Index extends Component {
 
     return (
       <div>
-        <PostTable postList={post.postList} categoryList={post.categoryList}
-                   loadPost={loadPost} deletePost={deletePost}/>
+        <Header/>
+        <PostTable postList={post.postList} categoryList={post.categoryList} loadPost={loadPost} deletePost={deletePost}/>
       </div>
     );
   }

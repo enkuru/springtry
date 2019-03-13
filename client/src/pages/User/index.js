@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {fetchRoles} from '../../actions/role';
 import {deleteUser, fetchUsers, loadUser} from '../../actions/user';
 import UserTable from './components/UserTable';
+import Header from "../../components/Header";
 
 class Index extends Component {
   static propTypes = {
@@ -21,6 +22,7 @@ class Index extends Component {
 
     return (
       <div>
+        <Header/>
         <UserTable roleList={user.roleList} userList={user.userList} loadUser={loadUser} deleteUser={deleteUser}/>
       </div>
     );

@@ -4,7 +4,7 @@ import * as loginActions from "../actions/login";
 const initialState = {
   fetching: false,
   error: '',
-  loggedUser: null,
+  loggedUser: JSON.parse(localStorage.getItem('user')),
   loggedIn: !!localStorage.getItem('token')
 };
 

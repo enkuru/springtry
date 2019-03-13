@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 
 import {deleteCategory, fetchCategories, loadCategory} from '../../actions/category';
 import CategoryTable from './components/CategoryTable';
+import Header from "../../components/Header";
 
 class Index extends Component {
   static propTypes = {
@@ -19,6 +20,7 @@ class Index extends Component {
 
     return (
       <div>
+        <Header/>
         <CategoryTable categoryList={category.categoryList} loadCategory={loadCategory} deleteCategory={deleteCategory}/>
       </div>
     );

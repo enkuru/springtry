@@ -6,6 +6,7 @@ import {withStyles} from '@material-ui/core/styles';
 import {Home} from '@material-ui/icons'
 import {connect} from "react-redux";
 import {authMe, logout} from './../actions/login';
+import {Redirect} from "react-router";
 
 const styles = theme => ({
   grow: {
@@ -38,12 +39,8 @@ class Header extends Component {
     classes: PropTypes.object.isRequired,
   };
 
-  componentDidMount() {
-    this.props.authMe();
-  }
-
   render() {
-    const {classes, login} = this.props;
+    const {classes, login, logout} = this.props;
 
     return login.loggedIn ? (
       <AppBar position="static" color="inherit">
@@ -56,10 +53,10 @@ class Header extends Component {
           <Button color="primary" to="/posts" className={classes.menuButton} exact component={NavLink}>Posts</Button>
           <Typography variant="h6" color="inherit" className={classes.grow}>{}</Typography>
           <Chip label={login.loggedUser ? login.loggedUser.username : ''} className={classes.chip}/>
-          <Button variant="contained" color="secondary" onClick={() => this.props.logout()} className={classes.logoutBtn}>Logout</Button>
+          <Button variant="contained" color="secondary" onClick={() => logout()} className={classes.logoutBtn}>Logout</Button>
         </Toolbar>
       </AppBar>
-    ) : <div/>;
+    ) : <Redirect to="/login"/>;
   }
 }
 

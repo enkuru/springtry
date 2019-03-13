@@ -42,10 +42,6 @@ class PostDialog extends Component {
     showModal: this.props.post.showModal
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   componentWillReceiveProps(nextProps) {
     this.setState({
       showModal: nextProps.post.showModal,

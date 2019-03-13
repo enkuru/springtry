@@ -18,7 +18,11 @@ const authRejected = dispatch => dispatch({type: AUTH_ME_REJECTED});
 
 const getAuthInfo = dispatch => dispatch({
   type: AUTH_ME,
-  payload: axios.get(`${API_BASE}/auth/me`).then(res => res.data)
+  payload: axios.get(`${API_BASE}/auth/me`)
+    .then(res => {
+      localStorage.setItem('user', JSON.stringify(res.data));
+      return res.data;
+    })
 });
 
 export function loginSubmit(loginInfo) {
@@ -40,12 +44,15 @@ export function authMe() {
   return dispatch => getAuthInfo(dispatch).catch(() => {
     delete axios.defaults.headers.common['Authorization'];
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
+
     authRejected(dispatch);
   });
 }
 
 export function logout() {
   localStorage.removeItem('token');
+  localStorage.removeItem('user');
   delete axios.defaults.headers.common['Authorization'];
 
   return dispatch => getAuthInfo(dispatch).catch(() => authRejected(dispatch))

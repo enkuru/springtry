@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 
 import {deleteHashTag, fetchHashTags, loadHashTag} from '../../actions/hashTag';
 import HashTagTable from './components/HashTagTable';
+import Header from "../../components/Header";
 
 class Index extends Component {
   static propTypes = {
@@ -19,6 +20,7 @@ class Index extends Component {
 
     return (
       <div>
+        <Header/>
         <HashTagTable hashTagList={hashTag.hashTagList} loadHashTag={loadHashTag} deleteHashTag={deleteHashTag}/>
       </div>
     );

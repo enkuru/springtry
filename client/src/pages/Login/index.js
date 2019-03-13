@@ -57,9 +57,10 @@ class Index extends Component {
   };
 
   render() {
-    const {classes} = this.props;
+    const {classes, login} = this.props;
+    const redirectPath = login.loggedUser.role.id === 1 ? "/admin-panel" : "/";
 
-    return this.props.login.loggedIn ? (<Redirect to="/admin-panel" push={true}/>)
+    return login.loggedIn ? <Redirect to={redirectPath} push={true}/>
       : (<main className={classes.main}>
           <CssBaseline/>
           <Paper className={classes.paper}>
