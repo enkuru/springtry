@@ -7,7 +7,7 @@ import {deleteUser, fetchUsers, loadUser} from '../../actions/user';
 import UserTable from './components/UserTable';
 import Header from "../../components/Header";
 
-class Index extends Component {
+class User extends Component {
   static propTypes = {
     user: PropTypes.object.isRequired,
   };
@@ -33,4 +33,4 @@ const mapStateToProps = ({user}) => ({user});
 
 const mapDispatchToProps = {fetchRoles, fetchUsers, loadUser, deleteUser};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Index);
+export default connect(mapStateToProps, mapDispatchToProps)(User);

@@ -20,18 +20,18 @@ const getAuthInfo = dispatch => dispatch({
   type: AUTH_ME,
   payload: axios.get(`${API_BASE}/auth/me`)
     .then(res => {
-      localStorage.setItem('user', JSON.stringify(res.data));
+      (localStorage.token ? localStorage : sessionStorage).setItem('user', JSON.stringify(res.data));
       return res.data;
     })
 });
 
-export function loginSubmit(loginInfo) {
+export function loginSubmit(loginInfo, rememberMe) {
   return dispatch => {
     dispatch({
       type: SUBMIT_LOGIN,
       payload: axios.post(`${API_BASE}/auth/signin`, loginInfo)
         .then(res => {
-          localStorage.setItem('token', res.data.accessToken);
+          (rememberMe ? localStorage : sessionStorage).setItem('token', res.data.accessToken);
           axios.defaults.headers.common['Authorization'] = "Bearer " + res.data.accessToken;
         })
         .then(() => getAuthInfo(dispatch))
@@ -42,18 +42,24 @@ export function loginSubmit(loginInfo) {
 
 export function authMe() {
   return dispatch => getAuthInfo(dispatch).catch(() => {
+    const storage = localStorage.token ? localStorage : sessionStorage;
+    storage.removeItem('token');
+    storage.removeItem('user');
+
     delete axios.defaults.headers.common['Authorization'];
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
 
     authRejected(dispatch);
   });
 }
 
 export function logout() {
-  localStorage.removeItem('token');
-  localStorage.removeItem('user');
+  const storage = localStorage.token ? localStorage : sessionStorage;
+  const isAdmin = JSON.parse(storage.user).role.id === 1;
+
+  storage.removeItem('token');
+  storage.removeItem('user');
+
   delete axios.defaults.headers.common['Authorization'];
 
-  return dispatch => getAuthInfo(dispatch).catch(() => authRejected(dispatch))
+  return dispatch => getAuthInfo(dispatch).catch(() =>{ !isAdmin  || (window.location.href = '/')});
 }

@@ -38,7 +38,7 @@ class PostDialog extends Component {
 
   state = {
     ...this.props.post.currentPost,
-    richContent: RichTextEditor.createValueFromString(this.props.post.content || "", "html"),
+    richContent: RichTextEditor.createValueFromString(this.props.post.currentPost.content || "", "html"),
     showModal: this.props.post.showModal
   };
 
@@ -46,7 +46,7 @@ class PostDialog extends Component {
     this.setState({
       showModal: nextProps.post.showModal,
       ...nextProps.post.currentPost,
-      richContent: RichTextEditor.createValueFromString(this.state.content, "html")
+      richContent: RichTextEditor.createValueFromString(nextProps.post.currentPost.content, "html")
     });
   }
 
@@ -60,7 +60,7 @@ class PostDialog extends Component {
 
   removeTag = index => this.setState(update(this.state, {tags: {$splice: [[index, 1]]}}));
 
-  saveOrUpdatePost = (e) => {
+  saveOrUpdate = e => {
     e.preventDefault();
 
     const {id, subject, richContent: content, tags, categoryId} = this.state;
@@ -79,7 +79,7 @@ class PostDialog extends Component {
         <Dialog open={this.state.showModal} onClose={onClose} maxWidth='lg' fullWidth={true} aria-labelledby="responsive-dialog-title">
           <DialogTitle id="responsive-dialog-title" align="center">{onEditMode ? "Edit Post" : "New Post"}</DialogTitle>
           <DialogContent>
-            <form className={classes.form}>
+            <form className={classes.form} onSubmit={this.saveOrUpdate}>
               <Grid container spacing={8}>
                 <Grid item xs={6}>
                   <FormControl margin="normal" fullWidth required>
@@ -108,8 +108,8 @@ class PostDialog extends Component {
           </DialogContent>
           <DialogActions>
             <Button className={classes.btn} onClick={onClose} variant="outlined" color="secondary">Cancel</Button>
-            <Button className={classes.btn} onClick={this.saveOrUpdatePost} variant="outlined"
-                    color="primary">{onEditMode ? "Update" : "Save"}</Button>
+            <Button className={classes.btn} type="submit" onClick={this.saveOrUpdate}
+                    variant="outlined" color="primary">{onEditMode ? "Update" : "Save"}</Button>
           </DialogActions>
         </Dialog>
       </div>

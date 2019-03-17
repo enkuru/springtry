@@ -51,7 +51,8 @@ class UserDialog extends Component {
 
   handleModal = modalState => this.setState({showModal: modalState});
 
-  saveOrUpdateUser = () => {
+  saveOrUpdate = e => {
+    e.preventDefault();
     const {id, name, surname, username, email, password, roleId} = this.state;
     const user = {id, name, surname, username, email, password, role: {id: roleId}};
 
@@ -68,7 +69,7 @@ class UserDialog extends Component {
         <Dialog open={this.state.showModal} onClose={onClose} aria-labelledby="responsive-dialog-title">
           <DialogTitle id="responsive-dialog-title" align="center">{onEditMode ? "Edit User" : "New User"}</DialogTitle>
           <DialogContent>
-            <form className={classes.form}>
+            <form className={classes.form} onSubmit={this.saveOrUpdate}>
               <Grid container spacing={8}>
                 <Grid item xs={6}>
                   <FormControl margin="normal" fullWidth>
@@ -111,8 +112,7 @@ class UserDialog extends Component {
           <DialogActions>
             <Button className={classes.btn} onClick={onClose}
                     variant="outlined" color="secondary">Cancel</Button>
-            <Button className={classes.btn} onClick={this.saveOrUpdateUser}
-                    variant="outlined" color="primary">{onEditMode ? "Update" : "Save"}</Button>
+            <Button className={classes.btn} type="submit" variant="outlined" color="primary">{onEditMode ? "Update" : "Save"}</Button>
           </DialogActions>
         </Dialog>
       </div>

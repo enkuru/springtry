@@ -7,7 +7,7 @@ import {fetchCategories} from '../../actions/category';
 import PostTable from './components/PostTable';
 import Header from "../../components/Header";
 
-class Index extends Component {
+class Post extends Component {
   static propTypes = {
     post: PropTypes.object.isRequired,
   };
@@ -33,4 +33,4 @@ const mapStateToProps = ({post}) => ({post});
 
 const mapDispatchToProps = {fetchPosts, fetchCategories, loadPost, deletePost};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Index);
+export default connect(mapStateToProps, mapDispatchToProps)(Post);

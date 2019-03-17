@@ -4,6 +4,7 @@ import com.enkuru.springtry.model.Post;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.core.config.Projection;
 
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -19,6 +20,8 @@ public interface PostProjection {
     String getSubject();
 
     String getContent();
+
+    Date getLastModifiedDate();
 
     @Value("#{target.getCategory().getId()}")
     Long getCategoryId();

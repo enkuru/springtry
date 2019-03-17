@@ -4,8 +4,9 @@ import * as loginActions from "../actions/login";
 const initialState = {
   fetching: false,
   error: '',
-  loggedUser: JSON.parse(localStorage.getItem('user')),
-  loggedIn: !!localStorage.getItem('token')
+  rememberMe: !!localStorage.token,
+  loggedUser: JSON.parse((localStorage.token ? localStorage : sessionStorage).user || null),
+  loggedIn: !!(localStorage.token || sessionStorage.token)
 };
 
 export default (state = initialState, action) => {

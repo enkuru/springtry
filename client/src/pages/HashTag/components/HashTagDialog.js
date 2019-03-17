@@ -46,7 +46,8 @@ class HashTagDialog extends Component {
 
   handleModal = modalState => this.setState({showModal: modalState});
 
-  saveOrUpdateHashTag = () => {
+  saveOrUpdate = e => {
+    e.preventDefault();
     const {id, name} = this.state;
     const hashTag = {id, name};
 
@@ -64,7 +65,7 @@ class HashTagDialog extends Component {
           <DialogTitle id="responsive-dialog-title"
                        align="center">{onEditMode ? "Edit HashTag" : "New HashTag"}</DialogTitle>
           <DialogContent>
-            <form className={classes.form}>
+            <form className={classes.form} onSubmit={this.saveOrUpdate}>
               <FormControl margin="normal" fullWidth required>
                 <InputLabel htmlFor="name">Name</InputLabel>
                 <Input value={this.state.name} id="name" name="name" onChange={this.handleChange} autoFocus/>
@@ -73,8 +74,7 @@ class HashTagDialog extends Component {
           </DialogContent>
           <DialogActions>
             <Button className={classes.btn} onClick={onClose} variant="outlined" color="secondary">Cancel</Button>
-            <Button className={classes.btn} onClick={this.saveOrUpdateHashTag} variant="outlined"
-                    color="primary">{onEditMode ? "Update" : "Save"}</Button>
+            <Button className={classes.btn} type="submit" variant="outlined" color="primary">{onEditMode ? "Update" : "Save"}</Button>
           </DialogActions>
         </Dialog>
       </div>

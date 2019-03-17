@@ -1,9 +1,30 @@
 import React, {Component} from 'react';
+import Header from "../../components/Header";
+import {fetchLastPosts} from "../../actions/home";
+
+import {connect} from "react-redux";
+import PostList from "./components/PostList";
 
 class Home extends Component {
+
+  componentDidMount() {
+    this.props.fetchLastPosts();
+  }
+
   render() {
-    return (<div>Home Page</div>)
+    const {home} = this.props;
+
+    return (
+      <div>
+        <Header/>
+        <PostList postList={home.postList}/>
+      </div>
+    )
   }
 }
 
-export default Home;
+const mapStateToProps = ({home}) => ({home});
+
+const mapDispatchToProps = {fetchLastPosts};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

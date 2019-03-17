@@ -7,7 +7,7 @@ import Header from "../../components/Header";
 class AdminPanel extends Component {
   render() {
     const {login} = this.props;
-    return login.loggedIn && !!login.loggedUser && login.loggedUser.role.id ?
+    return login.loggedIn && !!login.loggedUser && login.loggedUser.role.id === 1 ?
       <div>
         <Header/>
         <div>This is Admin Home!!</div>

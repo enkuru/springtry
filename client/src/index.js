@@ -9,7 +9,7 @@ import store from './store/index';
 import {Provider} from 'react-redux';
 import {BrowserRouter} from 'react-router-dom';
 
-axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem('token');
+axios.defaults.headers.common['Authorization'] = "Bearer " + (localStorage.token || sessionStorage.token);
 
 axios.interceptors.response.use(undefined, function (error) {
   if (!window.location.href.indexOf('login') && error.response.status === 401) {

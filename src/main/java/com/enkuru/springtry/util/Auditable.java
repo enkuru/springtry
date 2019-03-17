@@ -47,5 +47,5 @@ public abstract class Auditable extends AuditableDate implements Serializable {
     @LastModifiedDate
     @Temporal(TIMESTAMP)
     @JoinColumn(name = "UPDATED_DATE", nullable = false)
-    Date lastModifiedDate = new Date();
+    Date main = new Date();
 }

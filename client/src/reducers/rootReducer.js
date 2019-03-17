@@ -5,5 +5,6 @@ import user from './user';
 import hashTag from './hashTag';
 import post from './post';
 import category from './category';
+import home from './home';
 
-export default combineReducers({login, user, hashTag, post, category});
+export default combineReducers({login, user, hashTag, post, category, home});

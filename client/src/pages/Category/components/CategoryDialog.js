@@ -48,7 +48,8 @@ class CategoryDialog extends Component {
 
   handleModal = modalState => this.setState({showModal: modalState});
 
-  saveOrUpdateCategory = () => {
+  saveOrUpdate = e => {
+    e.preventDefault();
     const {id, name, parentCategoryId} = this.state;
     const category = {id, name};
 
@@ -69,10 +70,10 @@ class CategoryDialog extends Component {
             {onEditMode ? "Edit Category" : "New Category"}
           </DialogTitle>
           <DialogContent>
-            <form className={classes.form}>
+            <form className={classes.form} onSubmit={this.saveOrUpdate}>
               <FormControl margin="normal" fullWidth>
                 <InputLabel htmlFor="parentCategory">Parent Category</InputLabel>
-                <Select id="parentCategory" value={this.state.parentCategoryId} onChange={this.handleChange} name="parentCategoryId">
+                <Select id="parentCategory" value={this.state.parentCategoryId || 0} onChange={this.handleChange} name="parentCategoryId">
                   {categoryList.map(parent => (<MenuItem key={parent.id} value={parent.id}>{parent.name}</MenuItem>))}
                 </Select>
               </FormControl>
@@ -84,8 +85,7 @@ class CategoryDialog extends Component {
           </DialogContent>
           <DialogActions>
             <Button className={classes.btn} onClick={onClose} variant="outlined" color="secondary">Cancel</Button>
-            <Button className={classes.btn} onClick={this.saveOrUpdateCategory} variant="outlined"
-                    color="primary">{onEditMode ? "Update" : "Save"}</Button>
+            <Button className={classes.btn} type="submit" variant="outlined" color="primary">{onEditMode ? "Update" : "Save"}</Button>
           </DialogActions>
         </Dialog>
       </div>

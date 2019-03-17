@@ -6,7 +6,7 @@ import {deleteHashTag, fetchHashTags, loadHashTag} from '../../actions/hashTag';
 import HashTagTable from './components/HashTagTable';
 import Header from "../../components/Header";
 
-class Index extends Component {
+class HashTag extends Component {
   static propTypes = {
     hashTag: PropTypes.object.isRequired,
   };
@@ -31,4 +31,4 @@ const mapStateToProps = ({hashTag}) => ({hashTag});
 
 const mapDispatchToProps = {fetchHashTags, loadHashTag, deleteHashTag};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Index);
+export default connect(mapStateToProps, mapDispatchToProps)(HashTag);

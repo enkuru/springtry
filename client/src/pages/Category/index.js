@@ -6,7 +6,7 @@ import {deleteCategory, fetchCategories, loadCategory} from '../../actions/categ
 import CategoryTable from './components/CategoryTable';
 import Header from "../../components/Header";
 
-class Index extends Component {
+class Category extends Component {
   static propTypes = {
     category: PropTypes.object.isRequired,
   };
@@ -31,4 +31,4 @@ const mapStateToProps = ({category}) => ({category});
 
 const mapDispatchToProps = {fetchCategories, loadCategory, deleteCategory};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Index);
+export default connect(mapStateToProps, mapDispatchToProps)(Category);

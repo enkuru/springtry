@@ -9,6 +9,11 @@ export const FETCH_CATEGORIES_PENDING = 'FETCH_CATEGORIES_PENDING';
 export const FETCH_CATEGORIES_FULFILLED = 'FETCH_CATEGORIES_FULFILLED';
 export const FETCH_CATEGORIES_REJECTED = 'FETCH_CATEGORIES_REJECTED';
 
+export const FETCH_MAIN_CATEGORIES = 'FETCH_MAIN_CATEGORIES';
+export const FETCH_MAIN_CATEGORIES_PENDING = 'FETCH_MAIN_CATEGORIES_PENDING';
+export const FETCH_MAIN_CATEGORIES_FULFILLED = 'FETCH_MAIN_CATEGORIES_FULFILLED';
+export const FETCH_MAIN_CATEGORIES_REJECTED = 'FETCH_MAIN_CATEGORIES_REJECTED';
+
 export const SAVE_CATEGORY = 'SAVE_CATEGORY';
 export const SAVE_CATEGORY_PENDING = 'SAVE_CATEGORY_PENDING';
 export const SAVE_CATEGORY_FULFILLED = 'SAVE_CATEGORY_FULFILLED';
@@ -43,6 +48,13 @@ const fetchCategoryList = dispatch => dispatch({
 
 export function fetchCategories() {
   return dispatch => fetchCategoryList(dispatch);
+}
+
+export function fetchMainCategories() {
+  return dispatch => dispatch({
+    type: FETCH_MAIN_CATEGORIES,
+    payload: axios.get(`${API_BASE}/categories/mains`).then(res => res.data)
+  });
 }
 
 export function saveCategory(category) {
